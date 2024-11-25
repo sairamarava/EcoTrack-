@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Track - Carbon Footprint Calculator</title>
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/league-spartan/2.0.0/league-spartan.min.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" >
+    <style>
+        :root {
+            --orange: #FF7A59;
+            --dark-purple: #7749CD;
+            --light-purple: #8B5CF6;
+            --cream: #FFF3D4;
+            --light-gray: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        .top-banner {
+            background-color: var(--cream);
+            text-align: center;
+            padding: 8px;
+            font-weight: 500;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+        }
+
+        .logo-section {
+            background-color: var(--light-gray);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #333;
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-links {
+            background-color: var(--light-purple);
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .quotes {
+            display: flex;
+            justify-content: space-around;
+            padding: 2rem 5%;
+            text-align: center;
+        }
+
+        .intro-card {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator-card {
+            background-color: var(--orange);
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator-card h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .calculator-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .calculate-button {
+            grid-column: 1 / -1;
+            background-color: var(--dark-purple);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 200px;
+            margin: 1rem auto;
+            transition: transform 0.3s ease;
+        }
+
+        .calculate-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .terms {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            background-color: var(--light-purple);
+            color: white;
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .container {
+            margin-top: 50px;
+            margin-left: 500px;
+            display: flex;
+            gap: 20px;
+        
+        }
+        /* Sidebar */
+        .sidebar {
+        background-color: #fa9255;
+        width: 80px;
+        border-radius: 10px;
+        padding: 20px 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        }
+
+        .icon-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        }
+
+        .step-indicator {
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        color: #fa9255;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar i {
+        font-size: 20px;
+        color: black;
+        }
+
+        /* Content Area */
+        .content {
+        width: 500px;
+        height: 400px;
+        background-color: #e7d7fa;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        padding-left: 20px;
+        justify-content: space-evenly;
+        }
+
+        /* Calculate Button */
+        .calculate-button {
+            margin-top: 50px;
+            margin-left: 730px;
+        margin-top: 20px;
+        background-color: #6c50d3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .calculate-button1{
+            margin-top: 50px;
+            margin-left: 150px;
+            margin-top: 20px;
+        background-color: #6c50d3;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        padding-top: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+
+        }
+
+        .calculate-button:hover {
+        background-color: #5b44b0;
+        transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="top-banner">Check Your Carbon Footprint Now!</div>
+    
+    <nav>
+        <div class="logo-section">
+            <div class="logo-circle"></div>
+            <div class="logo-text">
+                <h1>Eco-Track</h1>
+                <p>Your Carbon Footprint Tracking Assistant</p>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#home">HOME</a>
+            <a href="#features">FEATURES</a>
+            <a href="#blog">BLOG</a>
+            <a href="#about">ABOUT</a>
+            <a href="#contact">CONTACT</a>
+        </div>
+    </nav>
+
+    <div class="quotes">
+        <div class="quote">
+            <p>"The Earth is what we all have in common."</p>
+            <p>– Wendell Berry</p>
+        </div>
+        <div class="quote">
+            <p>"One planet, one chance. Let's make it count."</p>
+            <p>– Jhon Doe</p>
+        </div>
+    </div>
+
+    <div class="intro-card">
+        <h2>Find Your Carbon Footprint | Make a Diff.</h2>
+        <p>Founded with a vision to combat climate change, EcoTrack combines cutting-edge technology with actionable insights to help you understand how your daily activities affect the planet.</p>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+          <div class="icon-group">
+            <div class="step-indicator">1 2 3 4</div>
+
+            <i class="fas fa-chart-bar"></i><br>
+            <i class="fas fa-car"></i><br>
+            <i class="fas fa-running"></i><br>
+            <i class="fas fa-lightbulb"></i>
+            
+           
+          </div>
+        </div>
+        <div class="content">
+            <div class="result-card"><br>
+                <h2>Carbon Footprint Results</h2><br>
+                <p><strong>Country:</strong> {{ country }}</p><br><br>
+                <p><strong>Waste Emissions:</strong> {{ waste_emissions }} kgCO2</p><br><br>
+                <p><strong>Transportation Emissions:</strong> {{ commute_emissions }} kgCO2</p><br><br>
+                <p><strong>Diet Emissions:</strong> {{ diet_emissions }} kgCO2</p><br><br>
+                <p><strong>Electricity Emissions:</strong> {{ electricity_emissions }} kgCO2</p><br><br>
+                <p><strong>Total Carbon Footprint:</strong> {{ total_emissions }} kgCO2</p>
+                <a href="/"><button class="calculate-button1">Go Back</button></a>
+            </div>            
+        </div>
+      </div>
+      <button class="calculate-button">Calculate</button>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SITEMAP</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>OUR SERVICES</h3>
+                <ul>
+                    <li><a href="#">Eco-friendly Actions</a></li>
+                    <li><a href="#">Carbon Footprint Tracking</a></li>
+                    <li><a href="#">Real-time analysis</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>GET HELP</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Sustainability Resources</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Eco-Track Head Office</h3>
+                <p>98 Street Gu IJL Barcelona Paris 908552</p>
+                <p>luxeire@contact.com</p>
+                <p>+80 1234 0000, 9008 8009</p>
+                <p>Monday - Saturday: 9:00 AM to 16:00 PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 EcoTrack. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
